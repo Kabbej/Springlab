@@ -1,37 +1,60 @@
 package se.iths.springlab.controllers;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.Data;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.bind.annotation.*;
+import se.iths.springlab.dto.FirstNameDto;
 import se.iths.springlab.dto.FootBallPlayerDto;
-import se.iths.springlab.entities.FootballPlayer;
-import se.iths.springlab.repositories.FootBallPlayerRepository;
+import se.iths.springlab.service.Service;
 
-import javax.naming.ldap.Control;
 import java.util.List;
 
+@Data
 @RestController
 public class Controller {
 
+    private final Service service;
 
-    private FootBallPlayerRepository footBallPlayerRepository;
-
-    @Autowired
-    public Controller (FootBallPlayerRepository footBallPlayerRepository){
-        this.footBallPlayerRepository = footBallPlayerRepository;
+    public Controller (Service service){
+        this.service=service;
     }
 
-    @GetMapping("/footballplayers")
-    public List <FootballPlayer> all(){
-        return footBallPlayerRepository.findAll();
+
+    //POST (create) method with 201 CREATED HTTP response
+    @PostMapping("/footballplayers")
+    @ResponseStatus(HttpStatus.CREATED)
+    public FootBallPlayerDto createFootballPlayer(@RequestBody FootBallPlayerDto footballPlayer) {
+        return service.createFootballPlayer(footballPlayer);
     }
 
-//    @GetMapping("/id/{id}")
-//    public FootBallPlayerDto findFootBallPlayerByID(@PathVariable long id) {
-//        return footBallPlayerRepository.getOne(id)
-//                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Id " + id + " not found."));
-//    }
+    //GET (read) method
+    @GetMapping("/footballplayers/")
+    public List<FootBallPlayerDto> getAll(){
+        return service.getAll();
+    }
+
+    @PutMapping("/footballplayers/{id}")
+    public FootBallPlayerDto replace(@RequestBody FootBallPlayerDto footBallPlayerDto, @PathVariable long id){
+        return service.replace(id, footBallPlayerDto);
+    }
+
+    @PatchMapping("/footballplayers/{id}")
+    public FootBallPlayerDto update(@RequestBody FirstNameDto firstNameDto, @PathVariable long id){
+        return service.updateFirstName(id, firstNameDto);
+
+    }
+
+    @DeleteMapping("/footballplayers/delete/{id}")
+    public boolean deleteFootballPlayer(@PathVariable long id){
+        service.delete(id);
+        return true;
+    }
+
+    @GetMapping("/footballplayers/{firstname}")
+    public List<FootBallPlayerDto>searchByFirstName(@PathVariable String firstname){
+        return service.searchByFirstName(firstname);
+    }
+
+
+
 }
