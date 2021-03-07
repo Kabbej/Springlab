@@ -8,6 +8,7 @@ import se.iths.springlab.dto.FootBallPlayerDto;
 import se.iths.springlab.service.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Data
 @RestController
@@ -28,9 +29,9 @@ public class Controller {
     }
 
     //GET (read) method
-    @GetMapping("/footballplayers/")
-    public List<FootBallPlayerDto> getAll(){
-        return service.getAll();
+    @GetMapping("/footballplayers/{id}")
+    public Optional <FootBallPlayerDto> getOne(@PathVariable long id){
+        return service.getOne(id);
     }
 
     @PutMapping("/footballplayers/{id}")

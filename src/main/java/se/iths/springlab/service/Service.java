@@ -12,7 +12,7 @@ public interface Service {
 
     FootBallPlayerDto createFootballPlayer(FootBallPlayerDto footBallPlayer);
 
-    List<FootBallPlayerDto> getAll();
+    Optional<FootBallPlayerDto> getOne(long id);
     List<FootBallPlayerDto>findByFirstname (String firstName);
 
     List<FootBallPlayerDto>searchByFirstName (String firstName);
