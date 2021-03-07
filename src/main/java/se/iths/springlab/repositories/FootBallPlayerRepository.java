@@ -9,6 +9,7 @@ import java.util.List;
 @Repository
 public interface FootBallPlayerRepository extends JpaRepository<FootballPlayer, Long> {
     List<FootballPlayer> findAllByFirstName(String firstName);
+    List<FootballPlayer> findAllByLastName (String firstName);
     List<FootballPlayer> findAllById (Long id);
 
 

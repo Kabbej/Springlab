@@ -1,5 +1,6 @@
 package se.iths.springlab.controllers;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,12 +10,19 @@ import se.iths.springlab.dto.FootBallPlayerDto;
 import se.iths.springlab.entities.FootballPlayer;
 import se.iths.springlab.repositories.FootBallPlayerRepository;
 
+import javax.naming.ldap.Control;
 import java.util.List;
 
 @RestController
 public class Controller {
 
+
     private FootBallPlayerRepository footBallPlayerRepository;
+
+    @Autowired
+    public Controller (FootBallPlayerRepository footBallPlayerRepository){
+        this.footBallPlayerRepository = footBallPlayerRepository;
+    }
 
     @GetMapping("/footballplayers")
     public List <FootballPlayer> all(){
