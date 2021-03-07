@@ -6,6 +6,7 @@ import lombok.*;
 @Data
 @NoArgsConstructor
 public class FootBallPlayerDto {
+    //DataTransferObjects
 
     private long id;
     private String firstName;
